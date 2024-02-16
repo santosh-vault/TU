@@ -4,14 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Exam;
 use Illuminate\Http\Request;
-use Symfony\Contracts\Service\Attribute\Required;
 
 class ExamController extends Controller
 {
     public function index()
     {
         $exams = Exam::all();
-        return view('exam.index', compact('exam'));
+        return view('exam.index', compact('exams'));
     }
 
     public function create()
@@ -21,15 +20,14 @@ class ExamController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate(
-            [
-                'semester' => 'required',
-                'date' => 'required|date',
-                'time' => 'required',
-                'subjects' => 'required',
-            ]
-        );
-        Exam::create($request::all());
+        $request->validate([
+            'semester' => 'required',
+            'date' => 'required|date',
+            'time' => 'required',
+            'subjects' => 'required',
+        ]);
+
+        Exam::create($request->all());
 
         return redirect()->route('exam.index')->with('success', 'Exam created successfully.');
     }
@@ -41,22 +39,21 @@ class ExamController extends Controller
 
     public function update(Request $request, Exam $exam)
     {
-        $request->validate(
-            [
-                'semester' => 'required',
-                'date' => 'required|date',
-                'time' => 'required',
-                'subjects' => 'required',
-            ]
-        );
+        $request->validate([
+            'semester' => 'required',
+            'date' => 'required|date',
+            'time' => 'required',
+            'subjects' => 'required',
+        ]);
+
         $exam->update($request->all());
 
-        return redirect()->route('exam.index')->with('success', 'Exam uppdated Successfully');
+        return redirect()->route('exam.index')->with('success', 'Exam updated successfully');
     }
 
     public function destroy(Exam $exam)
     {
         $exam->delete();
-        return redirect()->route('exams.index')->with('success', 'Exam deleted successfully.');
+        return redirect()->route('exam.index')->with('success', 'Exam deleted successfully.');
     }
 }

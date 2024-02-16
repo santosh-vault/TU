@@ -10,11 +10,10 @@ return new class extends Migration {
      *
      * @return void
      */
-    protected $connection = 'tu';
 
     public function up()
     {
-        Schema::create('exam', function (Blueprint $table) {
+        Schema::create('exams', function (Blueprint $table) {
             $table->id();
             $table->string('semester');
             $table->date('date');
